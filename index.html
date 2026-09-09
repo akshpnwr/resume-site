@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://resume.akashpanwar.dev/" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />
 
     <!-- Shared to hiring managers over email and LinkedIn, so the link
@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -85,6 +85,7 @@
     <main id="main">
       <!-- ==================== HERO ==================== -->
       <section class="hero" id="top">
+        <div class="hero__note" aria-hidden="true">// available from Sept 2026</div>
         <div class="shell">
           <p class="hero__eyebrow">
             <span class="dot" aria-hidden="true"></span>
@@ -143,6 +144,11 @@
               <span class="fact__value">MCA 8.7</span>
               <span class="fact__label">UPES Dehradun</span>
             </div>
+          </div>
+
+          <div class="note-row" aria-hidden="true">
+            <span class="annotation-arrow"></span>
+            <span class="annotation">the short version — the long version is below</span>
           </div>
         </div>
       </section>
@@ -302,6 +308,11 @@
               </div>
             </article>
           </div>
+
+          <div class="note-row" aria-hidden="true">
+            <span class="annotation-arrow"></span>
+            <div class="sticky-note">Every role here shipped something that is still running in production today</div>
+          </div>
         </div>
       </section>
 
@@ -460,6 +471,11 @@
               </div>
             </article>
           </div>
+
+          <div class="note-row" aria-hidden="true">
+            <span class="annotation-arrow"></span>
+            <div class="sticky-note">Hover a screenshot to take it off the wireframe and see the real thing</div>
+          </div>
         </div>
       </section>
 
@@ -542,18 +558,22 @@
       <!-- ==================== EDUCATION + ACHIEVEMENTS ==================== -->
       <section class="section" id="education">
         <div class="shell">
+          <div class="section__head">
+            <h2 class="section__title">Education &amp; achievements</h2>
+          </div>
+
           <div class="split">
             <div>
-              <h2 class="subhead">Education</h2>
+              <h3 class="subhead">Education</h3>
               <div class="edu">
                 <div>
-                  <h3 class="edu__degree">Master of Computer Applications</h3>
+                  <h4 class="edu__degree">Master of Computer Applications</h4>
                   <p class="edu__meta">
                     UPES Dehradun · CGPA 8.7 · Aug 2022 – Jun 2024
                   </p>
                 </div>
                 <div>
-                  <h3 class="edu__degree">Bachelor of Computer Applications</h3>
+                  <h4 class="edu__degree">Bachelor of Computer Applications</h4>
                   <p class="edu__meta">
                     Uttaranchal University · CGPA 8.6 · Aug 2018 – Jun 2021
                   </p>
@@ -562,7 +582,7 @@
             </div>
 
             <div>
-              <h2 class="subhead">Achievements</h2>
+              <h3 class="subhead">Achievements</h3>
               <ul class="bullets">
                 <li>
                   <strong>HackerRank Gold Badge — SQL</strong>, demonstrating

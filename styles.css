@@ -1,58 +1,115 @@
 /* ============================================================
-   resume.akashpanwar.dev
+   resume.akashpanwar.dev — Wireframe design system
 
-   Clean, neutral, high-contrast. Deliberately restrained: this
-   site is read by hiring managers who are scanning, not
-   browsing. Legibility and density beat visual flourish.
+   Lo-fi wireframe aesthetic: dotted canvas, dashed containers,
+   grey structure with colour reserved for annotations only.
+   Inter carries content; Architects Daughter carries the
+   handwritten annotation layer (labels, notes, callouts).
 
-   Shares nothing with ../styles.css by design — the two sites
-   diverge freely without merge risk.
+   Class names are unchanged from the previous stylesheet so the
+   markup stays stable — only the visual system was swapped.
+
+   Shares nothing with ../styles.css by design.
    ============================================================ */
 
 :root {
-  --bg:          #ffffff;
-  --bg-sunk:     #f6f7f8;
-  --text:        #14181d;
-  --text-muted:  #545c66;
-  --text-faint:  #656d78;
-  --rule:        #e2e5e9;
-  --rule-strong: #c9cdd3;
-  --accent:      #1c4fd8;
-  --on-accent:   #ffffff;
-  --tag-bg:      #f2f4f6;
-  --live:        #157a42;
+  /* Typography */
+  --font-annotation: "Architects Daughter", cursive;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  --measure: 68ch;
-  --shell: 62rem;
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
 
-  --step--1: clamp(0.82rem, 0.79rem + 0.13vw, 0.89rem);
-  --step-0:  clamp(0.97rem, 0.94rem + 0.16vw, 1.06rem);
-  --step-1:  clamp(1.12rem, 1.05rem + 0.33vw, 1.32rem);
-  --step-2:  clamp(1.35rem, 1.22rem + 0.62vw, 1.75rem);
-  --step-3:  clamp(1.85rem, 1.5rem + 1.6vw, 3rem);
+  /* Wireframe greys */
+  --white:    #ffffff;
+  --grey-50:  #f8f9fa;
+  --grey-100: #f0f1f3;
+  --grey-200: #e2e4e8;
+  --grey-300: #c8ccd2;
+  --grey-400: #9ea4ad;
+  --grey-500: #6e7681;
+  --grey-600: #4a5060;
+  --grey-700: #343a46;
+  --grey-800: #21252d;
+  --grey-900: #14171c;
+
+  /* Annotation colours */
+  --annotation-red:          #e74c3c;
+  --annotation-red-light:    #fdecea;
+  --annotation-blue:         #3b82f6;
+  --annotation-blue-light:   #eff6ff;
+  --annotation-green:        #22c55e;
+  --annotation-green-light:  #f0fdf4;
+  --annotation-orange:       #f59e0b;
+  --annotation-orange-light: #fffbeb;
+
+  /* Sticky note */
+  --sticky-yellow: #fff740;
+  --sticky-shadow: rgba(0, 0, 0, 0.12);
+
+  /* Canvas */
+  --canvas-bg:  #f5f5f5;
+  --canvas-dot: #d4d4d4;
+
+  /* Wireframe borders */
+  --border-dashed: 2px dashed var(--grey-400);
+  --border-dotted: 2px dotted var(--grey-300);
+  --border-solid:  2px solid var(--grey-700);
+
+  --measure: 65ch;
+  --shell: 1080px;
+  --line-height: 1.6;
 }
 
+/* The wireframe system is defined light-only. Dark mode inverts the grey
+   ramp so the same dashed/dotted structure survives, rather than dropping
+   the colour-scheme support the site already shipped. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:          #0f1216;
-    --bg-sunk:     #161b21;
-    --text:        #e8ebee;
-    --text-muted:  #a3acb6;
-    --text-faint:  #7b848f;
-    --rule:        #242b33;
-    --rule-strong: #333c46;
-    --accent:      #78a3ff;
-    --tag-bg:      #1b2129;
-    --live:        #46c47f;
-    /* The dark-mode accent is light, so white label text on it fails
-       contrast. Buttons take dark ink against that accent instead. */
-    --on-accent:   #0f1216;
+    --white:    #171a1f;
+    --grey-50:  #1b1f25;
+    --grey-100: #1f242b;
+    --grey-200: #272d35;
+    --grey-300: #3a424d;
+    --grey-400: #5b6470;
+    --grey-500: #98a1ac;
+    --grey-600: #b6bec8;
+    --grey-700: #d3d9e0;
+    --grey-800: #e8ebee;
+    --grey-900: #f4f6f8;
+
+    --annotation-red:          #ff7a6d;
+    --annotation-red-light:    #2b1a19;
+    --annotation-blue:         #78a3ff;
+    --annotation-blue-light:   #171f2e;
+    --annotation-green:        #57d68d;
+    --annotation-green-light:  #142219;
+    --annotation-orange:       #f0b429;
+    --annotation-orange-light: #241d10;
+
+    --sticky-yellow: #6b6410;
+    --sticky-shadow: rgba(0, 0, 0, 0.45);
+
+    --canvas-bg:  #0f1216;
+    --canvas-dot: #22272e;
   }
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 html {
+  font-size: 16px;
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
@@ -68,20 +125,24 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
-               "Segoe UI", Roboto, sans-serif;
-  font-size: var(--step-0);
-  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--line-height);
+  color: var(--grey-800);
+  background-color: var(--canvas-bg);
+  background-image: radial-gradient(circle, var(--canvas-dot) 1px, transparent 1px);
+  background-size: 20px 20px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-a { color: var(--accent); text-decoration: none; }
+a {
+  color: var(--annotation-blue);
+  text-decoration: none;
+}
 
-/* Links sitting inside a run of muted body text are underlined: colour alone
-   does not clear 3:1 against the surrounding copy (WCAG 1.4.1). */
+/* Links inside a run of muted copy are underlined: colour alone does not
+   clear 3:1 against the surrounding text (WCAG 1.4.1). */
 .bullets a, .contact__blurb a, .hero__blurb a {
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -89,13 +150,13 @@ a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--annotation-blue);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .shell {
-  width: min(100% - 2.5rem, var(--shell));
+  width: min(100% - var(--space-6), var(--shell));
   margin-inline: auto;
 }
 
@@ -103,12 +164,17 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   position: absolute;
   left: -9999px;
   top: 0;
-  background: var(--accent);
-  color: var(--on-accent);
-  padding: .6rem 1rem;
+  background: var(--grey-800);
+  color: var(--white);
+  border: var(--border-solid);
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   z-index: 100;
 }
-.skip:focus { left: .5rem; top: .5rem; }
+.skip:focus { left: var(--space-2); top: var(--space-2); }
 
 /* ---------------- Top bar ---------------- */
 
@@ -116,456 +182,762 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: saturate(1.6) blur(10px);
-  border-bottom: 1px solid var(--rule);
+  background: var(--white);
+  border-bottom: var(--border-dashed);
 }
 
 .topbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  min-height: 3.5rem;
+  gap: var(--space-5);
+  min-height: 56px;
 }
 
 .topbar__name {
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--grey-800);
 }
-.topbar__name:hover { text-decoration: none; }
+.topbar__name:hover { text-decoration: none; color: var(--grey-800); }
 
 .topnav {
   display: flex;
-  gap: 1.4rem;
-  font-size: var(--step--1);
+  gap: var(--space-5);
+  font-size: 0.75rem;
 }
-.topnav a { color: var(--text-muted); }
-.topnav a:hover { color: var(--text); text-decoration: none; }
+
+.topnav a {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--grey-500);
+  border-bottom: 1px dashed var(--grey-400);
+  padding-bottom: 2px;
+  transition: color .15s, border-color .15s;
+}
+.topnav a:hover {
+  color: var(--grey-800);
+  border-color: var(--grey-800);
+  text-decoration: none;
+}
 
 @media (max-width: 46rem) {
   .topnav { display: none; }
 }
 
-/* ---------------- Hero ---------------- */
+/* ---------------- Hero (masthead) ---------------- */
 
 .hero {
-  padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
-  border-bottom: 1px solid var(--rule);
+  background: var(--white);
+  border: var(--border-dashed);
+  padding: var(--space-8) var(--space-6);
+  margin: var(--space-7) auto;
+  width: min(100% - var(--space-6), var(--shell));
+  position: relative;
+}
+
+/* Corner crop marks, as on the wireframe masthead. */
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--grey-400);
+  border-style: solid;
+}
+
+.hero::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.hero::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+.hero .shell { width: 100%; }
+
+@media (max-width: 48rem) {
+  .hero { padding: var(--space-6) var(--space-4); }
 }
 
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: .5rem;
-  font-size: var(--step--1);
-  color: var(--text-muted);
-  letter-spacing: .04em;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  margin: 0 0 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--annotation-green);
+  border: 1px solid var(--annotation-green);
+  background: var(--annotation-green-light);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 2px;
+  margin: 0 0 var(--space-5);
 }
 
 .dot {
-  width: .5rem;
-  height: .5rem;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--live);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--live) 18%, transparent);
+  background: var(--annotation-green);
+  flex: none;
 }
 
 .hero__name {
-  font-size: var(--step-3);
+  font-family: var(--font-body);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
-  font-weight: 600;
-  margin: 0 0 .75rem;
+  text-transform: uppercase;
+  color: var(--grey-800);
+  margin: 0 0 var(--space-3);
 }
 
 .hero__role {
-  font-size: var(--step-1);
+  font-family: var(--font-annotation);
+  font-size: 1.25rem;
   font-weight: 400;
-  margin: 0 0 1.25rem;
-  letter-spacing: -0.01em;
+  color: var(--grey-500);
+  margin: 0 0 var(--space-5);
 }
 
 .hero__blurb {
   max-width: var(--measure);
-  color: var(--text-muted);
-  margin: 0 0 2rem;
+  color: var(--grey-600);
+  margin: 0 0 var(--space-6);
 }
-.hero__blurb strong { color: var(--text); font-weight: 600; }
+.hero__blurb strong { color: var(--grey-800); font-weight: 700; }
+
+/* Sticky-note annotation pinned to the masthead. */
+.hero__note {
+  position: absolute;
+  top: var(--space-3);
+  right: -8px;
+  background: var(--sticky-yellow);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-annotation);
+  font-size: 0.85rem;
+  color: var(--grey-700);
+  box-shadow: 2px 2px 4px var(--sticky-shadow);
+  transform: rotate(3deg);
+  white-space: nowrap;
+}
+
+@media (max-width: 60rem) {
+  .hero__note {
+    position: static;
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    transform: rotate(-1deg);
+    white-space: normal;
+  }
+}
 
 .cta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: .75rem;
-  margin-bottom: 2.25rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
+
+/* ---------------- Buttons ---------------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: .55rem;
-  padding: .7rem 1.25rem;
-  border-radius: 7px;
-  font-size: var(--step--1);
-  font-weight: 500;
-  border: 1px solid transparent;
-  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: var(--space-3) var(--space-5);
+  border: var(--border-solid);
+  background: var(--white);
+  color: var(--grey-800);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
-.btn:hover { text-decoration: none; }
+.btn:hover {
+  background: var(--grey-800);
+  color: var(--white);
+  text-decoration: none;
+}
 
 .btn--primary {
-  background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--accent);
+  background: var(--grey-800);
+  color: var(--white);
+  border-color: var(--grey-800);
 }
-.btn--primary:hover { background: color-mix(in srgb, var(--accent) 85%, var(--text)); }
+.btn--primary:hover {
+  background: var(--grey-700);
+  border-color: var(--grey-700);
+  color: var(--white);
+}
 
 .btn--ghost {
-  border-color: var(--rule-strong);
-  color: var(--text);
+  background: transparent;
+  border: 2px dotted var(--grey-400);
+  color: var(--grey-500);
 }
-.btn--ghost:hover { background: var(--bg-sunk); }
+.btn--ghost:hover {
+  background: transparent;
+  border-color: var(--grey-700);
+  border-style: dashed;
+  color: var(--grey-700);
+}
 
 .btn svg { flex: none; }
 
-/* Facts strip */
+/* ---------------- Facts strip ---------------- */
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  border-radius: 9px;
-  overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
 }
 
 .fact {
-  background: var(--bg);
-  padding: .95rem 1.1rem;
+  background: var(--white);
+  border: 1px dashed var(--grey-300);
+  padding: var(--space-4);
+  position: relative;
 }
 
 .fact__value {
-  font-size: var(--step-1);
-  font-weight: 600;
-  letter-spacing: -0.02em;
   display: block;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.2;
+  color: var(--grey-800);
 }
 
 .fact__label {
-  font-size: var(--step--1);
-  color: var(--text-faint);
   display: block;
-  margin-top: .15rem;
+  margin-top: var(--space-1);
+  font-family: var(--font-annotation);
+  font-size: 0.9rem;
+  color: var(--grey-500);
 }
 
 /* ---------------- Section scaffolding ---------------- */
 
 .section {
-  padding: clamp(2.75rem, 6vw, 4.5rem) 0;
-  border-bottom: 1px solid var(--rule);
+  padding: var(--space-8) 0 var(--space-7);
+  border-bottom: 1px dashed var(--grey-300);
 }
+
+/* Numbered section headers, per the wireframe system. The number comes from
+   a counter so the markup does not have to carry it. */
+main { counter-reset: section-counter; }
 
 .section__head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
   flex-wrap: wrap;
 }
 
-.section__title {
-  font-size: var(--step-2);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+.section__title,
+.split-title {
+  counter-increment: section-counter;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-body);
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: var(--grey-800);
   margin: 0;
 }
 
+.section__title::before,
+.split-title::before {
+  content: counter(section-counter);
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-solid);
+  border-radius: 50%;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--grey-700);
+  background: var(--white);
+}
+
 .section__note {
-  font-size: var(--step--1);
-  color: var(--text-faint);
+  font-family: var(--font-annotation);
+  font-size: 1rem;
+  color: var(--grey-500);
   margin: 0;
 }
 
 /* ---------------- Experience ---------------- */
 
-.timeline { display: grid; gap: 2.5rem; }
+.timeline { display: grid; gap: var(--space-6); }
 
 .job {
   display: grid;
-  grid-template-columns: 11rem 1fr;
-  gap: 2rem;
+  grid-template-columns: 176px 1fr;
+  gap: var(--space-6);
+  background: var(--white);
+  border: 1px dashed var(--grey-300);
+  padding: var(--space-5);
+  position: relative;
 }
 
 @media (max-width: 52rem) {
-  .job { grid-template-columns: 1fr; gap: .6rem; }
+  .job { grid-template-columns: 1fr; gap: var(--space-3); }
 }
 
 .job__when {
-  font-size: var(--step--1);
-  color: var(--text-faint);
+  font-family: var(--font-annotation);
+  font-size: 0.95rem;
+  color: var(--grey-500);
   font-variant-numeric: tabular-nums;
-  padding-top: .3rem;
 }
 
-.job__place { display: block; margin-top: .2rem; }
+.job__place { display: block; margin-top: var(--space-1); }
 
 .job__title {
-  font-size: var(--step-1);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
   letter-spacing: -0.015em;
-  margin: 0 0 .2rem;
+  color: var(--grey-800);
+  margin: 0 0 var(--space-1);
 }
 
 .job__org {
-  font-size: var(--step-0);
-  color: var(--text-muted);
-  margin: 0 0 .9rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--grey-500);
+  margin: 0 0 var(--space-4);
 }
 .job__org a {
-  color: var(--text-muted);
+  color: var(--grey-500);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.job__org a:hover { color: var(--accent); }
+.job__org a:hover { color: var(--annotation-blue); }
 
 .bullets {
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: .5rem;
+  gap: var(--space-3);
   max-width: var(--measure);
 }
 
 .bullets li {
   position: relative;
-  padding-left: 1.1rem;
-  color: var(--text-muted);
+  padding-left: var(--space-5);
+  font-size: 0.9375rem;
+  color: var(--grey-600);
+  line-height: 1.55;
 }
 
+/* Hollow square markers read as wireframe checkboxes rather than bullets. */
 .bullets li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: .65em;
-  width: .32rem;
-  height: .32rem;
-  border-radius: 50%;
-  background: var(--rule-strong);
+  top: 0.5em;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--grey-400);
+  background: transparent;
 }
 
-.bullets strong { color: var(--text); font-weight: 600; }
+.bullets strong { color: var(--grey-800); font-weight: 700; }
 
 /* ---------------- Work / projects ---------------- */
 
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-5);
 }
 
 .card {
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--bg);
+  background: var(--white);
+  border: var(--border-dashed);
   display: flex;
   flex-direction: column;
+  position: relative;
   transition: border-color .18s ease;
 }
-.card:hover { border-color: var(--rule-strong); }
+.card:hover { border-color: var(--grey-700); }
 
 .card__shot {
   display: block;
   width: 100%;
-  /* height:auto is load-bearing, not decorative. The width/height attributes
-     on the <img> are kept so the browser reserves space before the image
-     loads, but without this the attribute height (1080px) beats aspect-ratio
-     and the box renders ~315x1080 — cover then crops each screenshot to a
-     narrow vertical sliver of its top-left corner. */
+  /* height:auto is load-bearing. The width/height attributes on the <img>
+     reserve space before load, but without this the attribute height beats
+     aspect-ratio and cover crops each screenshot to a narrow sliver. */
   height: auto;
-  /* Sources are ~16:9 browser-viewport screenshots; matching that ratio
-     shows each site roughly whole. */
   aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: top center;
-  background: var(--bg-sunk);
-  border-bottom: 1px solid var(--rule);
+  background: var(--grey-100);
+  border-bottom: var(--border-dashed);
+  /* Screenshots sit desaturated in the wireframe until inspected, so colour
+     stays reserved for the annotation layer. */
+  filter: grayscale(1) contrast(0.92);
+  transition: filter .2s ease;
 }
+.card:hover .card__shot,
+.card:focus-within .card__shot { filter: none; }
 
 .card__body {
-  padding: 1.1rem 1.2rem 1.3rem;
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: .55rem;
+  gap: var(--space-3);
   flex: 1;
 }
 
 .card__title {
-  font-size: var(--step-0);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--grey-800);
   margin: 0;
-  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
-  gap: .4rem;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .card__desc {
   margin: 0;
-  font-size: var(--step--1);
-  color: var(--text-muted);
+  font-size: 0.875rem;
+  color: var(--grey-500);
+  line-height: 1.5;
   flex: 1;
 }
+
+/* ---------------- Tags / badges ---------------- */
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: .35rem;
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .tag {
-  font-size: .72rem;
-  letter-spacing: .015em;
-  padding: .2rem .5rem;
-  border-radius: 4px;
-  background: var(--tag-bg);
-  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--grey-400);
+  background: var(--white);
+  color: var(--grey-600);
+  display: inline-block;
   white-space: nowrap;
 }
 
 .live {
-  font-size: .68rem;
-  text-transform: uppercase;
-  letter-spacing: .06em;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
   font-weight: 600;
-  color: var(--live);
-  border: 1px solid color-mix(in srgb, var(--live) 35%, transparent);
-  padding: .1rem .38rem;
-  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--annotation-green);
+  background: var(--annotation-green-light);
+  color: var(--annotation-green);
 }
 
 /* ---------------- Skills ---------------- */
 
-.skills { display: grid; gap: 1.4rem; }
+.skills { display: grid; gap: var(--space-5); }
 
 .skill-row {
   display: grid;
-  grid-template-columns: 11rem 1fr;
-  gap: 2rem;
+  grid-template-columns: 176px 1fr;
+  gap: var(--space-6);
   align-items: start;
+  padding-bottom: var(--space-5);
+  border-bottom: 1px dotted var(--grey-300);
 }
+.skills .skill-row:last-child { border-bottom: none; padding-bottom: 0; }
 
 @media (max-width: 52rem) {
-  .skill-row { grid-template-columns: 1fr; gap: .5rem; }
+  .skill-row { grid-template-columns: 1fr; gap: var(--space-3); }
 }
 
 .skill-row__label {
-  font-size: var(--step--1);
-  color: var(--text-faint);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: .05em;
-  padding-top: .2rem;
+  letter-spacing: 0.06em;
+  color: var(--grey-400);
+  padding-top: var(--space-1);
 }
 
 /* ---------------- Education / achievements ---------------- */
 
 .split {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  gap: clamp(2rem, 5vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
+}
+
+.split > div {
+  background: var(--white);
+  border: 1px dashed var(--grey-300);
+  padding: var(--space-5);
 }
 
 .subhead {
-  font-size: var(--step-1);
+  font-family: var(--font-body);
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: -0.015em;
-  margin: 0 0 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--grey-800);
+  margin: 0 0 var(--space-5);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px dashed var(--grey-300);
 }
 
-.edu { display: grid; gap: 1.4rem; }
+.edu { display: grid; gap: var(--space-5); }
 
 .edu__degree {
-  font-size: var(--step-0);
-  font-weight: 600;
-  margin: 0 0 .15rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--grey-800);
+  margin: 0 0 var(--space-1);
 }
 
 .edu__meta {
   margin: 0;
-  font-size: var(--step--1);
-  color: var(--text-muted);
+  font-family: var(--font-annotation);
+  font-size: 0.95rem;
+  color: var(--grey-500);
 }
 
 /* ---------------- Contact ---------------- */
 
 .contact {
-  padding: clamp(3rem, 7vw, 5rem) 0;
-  background: var(--bg-sunk);
-  border-top: 1px solid var(--rule);
+  background: var(--white);
+  border: var(--border-dashed);
+  padding: var(--space-7) var(--space-6);
+  margin: var(--space-7) auto 0;
+  width: min(100% - var(--space-6), var(--shell));
+  position: relative;
+}
+
+.contact .shell { width: 100%; }
+
+.contact::before {
+  content: 'CONTACT';
+  position: absolute;
+  top: -11px;
+  left: var(--space-7);
+  background: var(--canvas-bg);
+  padding: 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--grey-400);
 }
 
 .contact__title {
-  font-size: var(--step-2);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: -0.02em;
-  margin: 0 0 .6rem;
+  color: var(--grey-800);
+  margin: 0 0 var(--space-3);
 }
 
 .contact__blurb {
-  color: var(--text-muted);
-  max-width: 46ch;
-  margin: 0 0 1.75rem;
+  font-family: var(--font-annotation);
+  font-size: 1.05rem;
+  color: var(--grey-500);
+  max-width: 50ch;
+  margin: 0 0 var(--space-6);
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: var(--space-5);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--step--1);
 }
 
 .links a {
   display: inline-flex;
   align-items: center;
-  gap: .45rem;
-  color: var(--text);
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--grey-500);
+  border-bottom: 1px dashed var(--grey-400);
+  padding-bottom: 2px;
+  transition: color .15s, border-color .15s;
 }
-.links a:hover { color: var(--accent); }
+.links a:hover {
+  color: var(--grey-800);
+  border-color: var(--grey-800);
+  text-decoration: none;
+}
+
+/* ---------------- Footer ---------------- */
 
 .foot {
-  border-top: 1px solid var(--rule);
-  padding: 1.5rem 0;
-  font-size: var(--step--1);
-  color: var(--text-faint);
+  width: min(100% - var(--space-6), var(--shell));
+  margin: var(--space-7) auto var(--space-8);
+  background: var(--white);
+  border: var(--border-dashed);
+  padding: var(--space-6);
+  position: relative;
+}
+
+.foot::before {
+  content: 'FOOTER';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--canvas-bg);
+  padding: 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--grey-400);
+}
+
+.foot .shell {
+  width: 100%;
+  font-family: var(--font-annotation);
+  font-size: 0.95rem;
+  color: var(--grey-500);
+}
+
+/* ---------------- Annotation utilities ---------------- */
+
+.annotation {
+  font-family: var(--font-annotation);
+  font-size: 0.85rem;
+  color: var(--annotation-red);
+  display: inline-block;
+}
+
+/* Curved red marker arrow, inline SVG as a background so it needs no markup. */
+.annotation-arrow {
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  flex: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'%3E%3Cpath d='M2 18 C8 18 14 12 20 8 C26 4 32 4 38 6 M32 2 L38 6 L34 11' stroke='%23e74c3c' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+.sticky-note {
+  background: var(--sticky-yellow);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-annotation);
+  font-size: 0.9rem;
+  color: var(--grey-700);
+  box-shadow: 2px 3px 6px var(--sticky-shadow);
+  position: relative;
+  display: inline-block;
+  transform: rotate(-1deg);
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.note-row {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-4);
+  align-items: center;
   flex-wrap: wrap;
+  margin-top: var(--space-6);
 }
 
 /* ---------------- Print ----------------
-   Someone will hit Ctrl-P on this page. Give them the content
-   without the site chrome rather than a broken screenshot. */
+   Someone will hit Ctrl-P on this page. Give them the content without the
+   wireframe chrome — annotations and canvas texture are review artifacts,
+   not resume content. */
 
 @media print {
-  .topbar, .cta-row, .skip, .card__shot, .contact { display: none; }
-  body { background: #fff; color: #000; font-size: 10pt; }
-  .section, .hero { border: 0; padding: .5rem 0; break-inside: avoid; }
-  .shell { width: 100%; }
+  .topbar, .cta-row, .skip, .card__shot, .contact,
+  .sticky-note, .annotation, .annotation-arrow, .note-row,
+  .hero__note { display: none; }
+
+  body {
+    background: #fff;
+    background-image: none;
+    color: #000;
+    font-size: 10pt;
+  }
+
+  .hero, .section, .foot, .job, .card, .split > div, .fact {
+    border: 0;
+    padding: var(--space-2) 0;
+    margin: 0;
+    break-inside: avoid;
+    background: #fff;
+  }
+
+  .hero::before, .hero::after, .foot::before { display: none; }
+  .section__title::before, .split-title::before { display: none; }
+  .shell, .hero, .foot { width: 100%; }
   a { color: #000; }
-  .card { break-inside: avoid; }
 }
