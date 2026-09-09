@@ -70,39 +70,78 @@
   --line-height: 1.6;
 }
 
-/* The wireframe system is defined light-only. Dark mode inverts the grey
-   ramp so the same dashed/dotted structure survives, rather than dropping
-   the colour-scheme support the site already shipped. */
+/* The wireframe system is defined light-first. The dark palette inverts the
+   grey ramp so the same dashed/dotted structure survives.
+
+   It applies in two cases, listed as separate selectors because a browser
+   drops the whole rule if any selector in a comma list is unknown:
+     1. the visitor's OS prefers dark and they have not chosen light here;
+     2. the visitor explicitly picked dark with the toggle.
+   ============================================================ */
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --white:    #171a1f;
-    --grey-50:  #1b1f25;
-    --grey-100: #1f242b;
-    --grey-200: #272d35;
-    --grey-300: #3a424d;
-    --grey-400: #5b6470;
-    --grey-500: #98a1ac;
-    --grey-600: #b6bec8;
-    --grey-700: #d3d9e0;
-    --grey-800: #e8ebee;
-    --grey-900: #f4f6f8;
+  color-scheme: dark;
+  --white:    #171a1f;
+  --grey-50:  #1b1f25;
+  --grey-100: #1f242b;
+  --grey-200: #272d35;
+  --grey-300: #3a424d;
+  --grey-400: #5b6470;
+  --grey-500: #98a1ac;
+  --grey-600: #b6bec8;
+  --grey-700: #d3d9e0;
+  --grey-800: #e8ebee;
+  --grey-900: #f4f6f8;
 
-    --annotation-red:          #ff7a6d;
-    --annotation-red-light:    #2b1a19;
-    --annotation-blue:         #78a3ff;
-    --annotation-blue-light:   #171f2e;
-    --annotation-green:        #57d68d;
-    --annotation-green-light:  #142219;
-    --annotation-orange:       #f0b429;
-    --annotation-orange-light: #241d10;
+  --annotation-red:          #ff7a6d;
+  --annotation-red-light:    #2b1a19;
+  --annotation-blue:         #78a3ff;
+  --annotation-blue-light:   #171f2e;
+  --annotation-green:        #57d68d;
+  --annotation-green-light:  #142219;
+  --annotation-orange:       #f0b429;
+  --annotation-orange-light: #241d10;
 
-    --sticky-yellow: #6b6410;
-    --sticky-shadow: rgba(0, 0, 0, 0.45);
+  --sticky-yellow: #6b6410;
+  --sticky-shadow: rgba(0, 0, 0, 0.45);
 
-    --canvas-bg:  #0f1216;
-    --canvas-dot: #22272e;
+  --canvas-bg:  #0f1216;
+  --canvas-dot: #22272e;
   }
 }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --white:    #171a1f;
+  --grey-50:  #1b1f25;
+  --grey-100: #1f242b;
+  --grey-200: #272d35;
+  --grey-300: #3a424d;
+  --grey-400: #5b6470;
+  --grey-500: #98a1ac;
+  --grey-600: #b6bec8;
+  --grey-700: #d3d9e0;
+  --grey-800: #e8ebee;
+  --grey-900: #f4f6f8;
+
+  --annotation-red:          #ff7a6d;
+  --annotation-red-light:    #2b1a19;
+  --annotation-blue:         #78a3ff;
+  --annotation-blue-light:   #171f2e;
+  --annotation-green:        #57d68d;
+  --annotation-green-light:  #142219;
+  --annotation-orange:       #f0b429;
+  --annotation-orange-light: #241d10;
+
+  --sticky-yellow: #6b6410;
+  --sticky-shadow: rgba(0, 0, 0, 0.45);
+
+  --canvas-bg:  #0f1216;
+  --canvas-dot: #22272e;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -244,6 +283,53 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 @media (max-width: 46rem) {
   .topnav { display: none; }
 }
+
+/* ---------------- Theme toggle ----------------
+   A dashed square button matching the wireframe borders. It shows the icon
+   for the theme it will switch *to*: sun while dark, moon while light. Both
+   icons live in the markup and CSS picks one, so no JS runs to swap glyphs
+   and the pre-paint theme script stays a one-liner. */
+
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  padding: 0;
+  color: var(--grey-600);
+  background: var(--white);
+  border: var(--border-dashed);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.theme-toggle:hover {
+  color: var(--grey-900);
+  border-color: var(--grey-700);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--annotation-blue);
+  outline-offset: 2px;
+}
+
+/* Default (light) shows the moon; the dark themes swap to the sun. */
+.theme-toggle__sun { display: none; }
+.theme-toggle__moon { display: block; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle__sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle__moon { display: none; }
+}
+:root[data-theme="dark"] .theme-toggle__sun { display: block; }
+:root[data-theme="dark"] .theme-toggle__moon { display: none; }
 
 /* ---------------- Hero (masthead) ---------------- */
 
@@ -456,10 +542,7 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   border-bottom: 1px dashed var(--grey-300);
 }
 
-/* Numbered section headers, per the wireframe system. The number comes from
-   a counter so the markup does not have to carry it. */
-main { counter-reset: section-counter; }
-
+/* Section headers, per the wireframe system. */
 .section__head {
   display: flex;
   align-items: baseline;
@@ -471,7 +554,6 @@ main { counter-reset: section-counter; }
 
 .section__title,
 .split-title {
-  counter-increment: section-counter;
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -485,22 +567,6 @@ main { counter-reset: section-counter; }
   margin: 0;
 }
 
-.section__title::before,
-.split-title::before {
-  content: counter(section-counter);
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: var(--border-solid);
-  border-radius: 50%;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--grey-700);
-  background: var(--white);
-}
 
 .section__note {
   font-family: var(--font-annotation);
@@ -933,7 +999,7 @@ main { counter-reset: section-counter; }
    not resume content. */
 
 @media print {
-  .topbar, .cta-row, .skip, .card__shot, .contact,
+  .topbar, .theme-toggle, .cta-row, .skip, .card__shot, .contact,
   .sticky-note, .annotation, .annotation-arrow, .note-row,
   .hero__note { display: none; }
 
@@ -953,7 +1019,8 @@ main { counter-reset: section-counter; }
   }
 
   .hero::before, .hero::after, .foot::before { display: none; }
-  .section__title::before, .split-title::before { display: none; }
+  /* Headings print flat: no badge ring or fill behind the section icons. */
+  .icon--section { border: 0; padding: 0; width: 22px; height: 22px; background: none; }
   .shell, .hero, .foot { width: 100%; }
   a { color: #000; }
 }
@@ -970,10 +1037,26 @@ main { counter-reset: section-counter; }
   stroke: currentColor;
 }
 
-/* Section headers: the icon sits between the counter bubble and the title,
-   quieter than the heading text so the number → icon → words order reads
-   left to right without competing. */
-.icon--section { color: var(--grey-400); }
+/* Section headers: the icon inherits the circular badge the section numbers
+   used to carry — same 36px round, same 2px solid border, same white fill —
+   so the header still opens on a round marker, now one that says what the
+   section is instead of counting it. box-sizing keeps the outer circle at
+   36px while padding shrinks the glyph inside it. */
+.icon--section {
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: var(--border-solid);
+  border-radius: 50%;
+  color: var(--grey-700);
+  background: var(--white);
+  overflow: visible;
+  /* The glyph draws into a 20px box inside the padding, so the inline
+     stroke-width of 2 would scale down to ~1.7px and read thinner than the
+     2px ring around it. 2.4 lands the rendered stroke back on 2px. */
+  stroke-width: 2.4;
+}
 
 .section__title .title__text,
 .contact__title .title__text { display: inline; }
