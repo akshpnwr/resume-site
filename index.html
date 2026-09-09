@@ -71,7 +71,11 @@
 
     <header class="topbar">
       <div class="shell topbar__inner">
-        <a class="topbar__name" href="#top">Akash Panwar</a>
+        <a class="topbar__name" href="#top">
+          <img class="avatar" src="/assets/avatar.webp" alt=""
+               width="34" height="34" decoding="async" />
+          Akash Panwar
+        </a>
         <nav class="topnav" aria-label="Sections">
           <a href="#experience">Experience</a>
           <a href="#work">Work</a>
@@ -119,10 +123,12 @@
               Download Resume (PDF)
             </a>
             <a class="btn btn--ghost" href="mailto:akashpanwar9976@gmail.com">
+              <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
               Email me
             </a>
             <a class="btn btn--ghost" href="https://www.linkedin.com/in/akash-panwar-27b0141bb/"
                target="_blank" rel="noopener">
+              <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-11h4v1.5A4 4 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
               LinkedIn
             </a>
           </div>
@@ -157,7 +163,7 @@
       <section class="section" id="experience">
         <div class="shell">
           <div class="section__head">
-            <h2 class="section__title">Experience</h2>
+            <h2 class="section__title"><svg class="icon icon--section" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M3 12h18"/></svg><span class="title__text">Experience</span></h2>
           </div>
 
           <div class="timeline">
@@ -320,18 +326,67 @@
       <section class="section" id="work">
         <div class="shell">
           <div class="section__head">
-            <h2 class="section__title">Selected work</h2>
+            <h2 class="section__title"><svg class="icon icon--section" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V6a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M15 4v5h5"/><path d="M8 13h8M8 17h5"/></svg><span class="title__text">Selected work</span></h2>
             <p class="section__note">All links go to live production sites.</p>
           </div>
 
           <div class="work-grid">
+            <article class="card">
+              <img class="card__shot" src="/assets/talentgpt-new.webp"
+                   alt="TalentGPT multi-tenant hiring platform" loading="lazy"
+                   width="1900" height="1080" />
+              <div class="card__body">
+                <h3 class="card__title">
+                  <a href="https://talentgpt.world/" target="_blank" rel="noopener">TalentGPT<svg class="icon icon--ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+                  <span class="live">Live</span>
+                </h3>
+                <p class="card__desc">
+                  Multi-tenant hiring SaaS built as founding engineer —
+                  ATS-style candidate scoring and search, organization-level
+                  permissions, and full recruiter workflows on a shared
+                  codebase.
+                </p>
+                <ul class="tags">
+                  <li class="tag">React</li>
+                  <li class="tag">TanStack</li>
+                  <li class="tag">Node.js</li>
+                  <li class="tag">MongoDB</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <img class="card__shot" src="/assets/realestateverifiedleads.webp"
+                   alt="realestateverifiedleads.ai AI lead generation platform" loading="lazy"
+                   width="1900" height="1080" />
+              <div class="card__body">
+                <h3 class="card__title">
+                  <a href="https://realestateverifiedleads.ai/" target="_blank" rel="noopener">realestateverifiedleads.ai<svg class="icon icon--ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+                  <span class="live">Live</span>
+                </h3>
+                <p class="card__desc">
+                  AI lead-generation SaaS connecting real-estate teams with
+                  voice-verified buyers. A 5-tier qualification flow filters
+                  unverified leads before they reach the sales floor, with RBAC
+                  scoping each stage to its own team.
+                </p>
+                <ul class="tags">
+                  <li class="tag">React</li>
+                  <li class="tag">Tailwind</li>
+                  <li class="tag">Vite</li>
+                  <li class="tag">MySQL</li>
+                  <li class="tag">Prisma</li>
+                </ul>
+              </div>
+            </article>
+
             <article class="card">
               <img class="card__shot" src="/assets/ireportify.webp"
                    alt="iReportify marine inspection reporting platform" loading="lazy"
                    width="1900" height="1080" />
               <div class="card__body">
                 <h3 class="card__title">
-                  <a href="https://ireportify.com/" target="_blank" rel="noopener">iReportify</a>
+                  <a href="https://ireportify.com/" target="_blank" rel="noopener">iReportify<svg class="icon icon--ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
                   <span class="live">Live</span>
                 </h3>
                 <p class="card__desc">
@@ -352,61 +407,12 @@
             </article>
 
             <article class="card">
-              <img class="card__shot" src="/assets/realestateverifiedleads.webp"
-                   alt="realestateverifiedleads.ai AI lead generation platform" loading="lazy"
-                   width="1900" height="1080" />
-              <div class="card__body">
-                <h3 class="card__title">
-                  <a href="https://realestateverifiedleads.ai/" target="_blank" rel="noopener">realestateverifiedleads.ai</a>
-                  <span class="live">Live</span>
-                </h3>
-                <p class="card__desc">
-                  AI lead-generation SaaS connecting real-estate teams with
-                  voice-verified buyers. A 5-tier qualification flow filters
-                  unverified leads before they reach the sales floor, with RBAC
-                  scoping each stage to its own team.
-                </p>
-                <ul class="tags">
-                  <li class="tag">React</li>
-                  <li class="tag">Tailwind</li>
-                  <li class="tag">Vite</li>
-                  <li class="tag">MySQL</li>
-                  <li class="tag">Prisma</li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="card">
-              <img class="card__shot" src="/assets/talentgpt-new.webp"
-                   alt="TalentGPT multi-tenant hiring platform" loading="lazy"
-                   width="1900" height="1080" />
-              <div class="card__body">
-                <h3 class="card__title">
-                  <a href="https://talentgpt.world/" target="_blank" rel="noopener">TalentGPT</a>
-                  <span class="live">Live</span>
-                </h3>
-                <p class="card__desc">
-                  Multi-tenant hiring SaaS built as founding engineer —
-                  ATS-style candidate scoring and search, organization-level
-                  permissions, and full recruiter workflows on a shared
-                  codebase.
-                </p>
-                <ul class="tags">
-                  <li class="tag">React</li>
-                  <li class="tag">TanStack</li>
-                  <li class="tag">Node.js</li>
-                  <li class="tag">MongoDB</li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="card">
               <img class="card__shot" src="/assets/jamesaston.webp"
                    alt="James Aston leather goods Shopify storefront" loading="lazy"
                    width="1900" height="1080" />
               <div class="card__body">
                 <h3 class="card__title">
-                  <a href="https://jamesaston.in/" target="_blank" rel="noopener">James Aston</a>
+                  <a href="https://jamesaston.in/" target="_blank" rel="noopener">James Aston<svg class="icon icon--ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
                   <span class="live">Live</span>
                 </h3>
                 <p class="card__desc">
@@ -431,7 +437,7 @@
                    width="1900" height="1080" />
               <div class="card__body">
                 <h3 class="card__title">
-                  <a href="https://furnicheer.in/" target="_blank" rel="noopener">Furnicheer</a>
+                  <a href="https://furnicheer.in/" target="_blank" rel="noopener">Furnicheer<svg class="icon icon--ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
                   <span class="live">Live</span>
                 </h3>
                 <p class="card__desc">
@@ -454,7 +460,7 @@
                    width="1900" height="1080" />
               <div class="card__body">
                 <h3 class="card__title">
-                  <a href="https://www.easyprimeholidays.com/" target="_blank" rel="noopener">Easy Prime Holidays</a>
+                  <a href="https://www.easyprimeholidays.com/" target="_blank" rel="noopener">Easy Prime Holidays<svg class="icon icon--ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
                   <span class="live">Live</span>
                 </h3>
                 <p class="card__desc">
@@ -483,12 +489,12 @@
       <section class="section" id="skills">
         <div class="shell">
           <div class="section__head">
-            <h2 class="section__title">Technical skills</h2>
+            <h2 class="section__title"><svg class="icon icon--section" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/><line x1="13" y1="4" x2="11" y2="20"/></svg><span class="title__text">Technical skills</span></h2>
           </div>
 
           <div class="skills">
             <div class="skill-row">
-              <div class="skill-row__label">Languages</div>
+              <div class="skill-row__label"><svg class="icon icon--skill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/></svg>Languages</div>
               <ul class="tags">
                 <li class="tag">JavaScript</li>
                 <li class="tag">TypeScript</li>
@@ -499,7 +505,7 @@
             </div>
 
             <div class="skill-row">
-              <div class="skill-row__label">Frontend</div>
+              <div class="skill-row__label"><svg class="icon icon--skill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="15" rx="2"/><path d="M2 9h20"/><path d="M8 22h8"/></svg>Frontend</div>
               <ul class="tags">
                 <li class="tag">React</li>
                 <li class="tag">Remix</li>
@@ -515,7 +521,7 @@
             </div>
 
             <div class="skill-row">
-              <div class="skill-row__label">Backend &amp; data</div>
+              <div class="skill-row__label"><svg class="icon icon--skill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>Backend &amp; data</div>
               <ul class="tags">
                 <li class="tag">Node.js</li>
                 <li class="tag">Express</li>
@@ -531,7 +537,7 @@
             </div>
 
             <div class="skill-row">
-              <div class="skill-row__label">Platforms &amp; tools</div>
+              <div class="skill-row__label"><svg class="icon icon--skill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 1 5 5L21 13l-3 3-8.5-8.5 3-3z"/><path d="M9.5 7.5 3 14v5h5l6.5-6.5"/></svg>Platforms &amp; tools</div>
               <ul class="tags">
                 <li class="tag">Shopify (Liquid)</li>
                 <li class="tag">Wix</li>
@@ -544,7 +550,7 @@
             </div>
 
             <div class="skill-row">
-              <div class="skill-row__label">Domain</div>
+              <div class="skill-row__label"><svg class="icon icon--skill" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>Domain</div>
               <ul class="tags">
                 <li class="tag">Full-stack web development</li>
                 <li class="tag">Multi-tenant SaaS architecture</li>
@@ -559,7 +565,7 @@
       <section class="section" id="education">
         <div class="shell">
           <div class="section__head">
-            <h2 class="section__title">Education &amp; achievements</h2>
+            <h2 class="section__title"><svg class="icon icon--section" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8 12 3l10 5-10 5z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/></svg><span class="title__text">Education &amp; achievements</span></h2>
           </div>
 
           <div class="split">
@@ -614,7 +620,7 @@
     <!-- ==================== CONTACT ==================== -->
     <section class="contact" id="contact">
       <div class="shell">
-        <h2 class="contact__title">Let's talk</h2>
+        <h2 class="contact__title"><svg class="icon icon--section" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3 1.2-4.2A8 8 0 1 1 21 12z"/><path d="M8 11h8M8 15h5"/></svg><span class="title__text">Let's talk</span></h2>
         <p class="contact__blurb">
           Open to full-time full-stack roles, remote or Dehradun-based. The
           fastest way to reach me is email — I reply within a day.
@@ -622,18 +628,34 @@
 
         <div class="cta-row">
           <a class="btn btn--primary" href="mailto:akashpanwar9976@gmail.com">
+            <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
             akashpanwar9976@gmail.com
           </a>
           <a class="btn btn--ghost" href="/resume.pdf" download="Akash-Panwar-Resume.pdf">
+            <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
             Download Resume (PDF)
           </a>
         </div>
 
         <ul class="links">
-          <li><a href="https://github.com/akshpnwr" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/akash-panwar-27b0141bb/" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="https://x.com/akashpnwr" target="_blank" rel="noopener">X</a></li>
-          <li><a href="https://akashpanwar.dev/" target="_blank" rel="noopener">akashpanwar.dev</a></li>
+          <li><a href="https://github.com/akshpnwr" target="_blank" rel="noopener">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.2v-3.4a3 3 0 0 0-.8-2.3c2.6-.3 5.4-1.3 5.4-5.8a4.5 4.5 0 0 0-1.2-3.2 4.2 4.2 0 0 0-.1-3.1s-1-.3-3.2 1.2a11 11 0 0 0-5.8 0C7.1 3.5 6.1 3.8 6.1 3.8A4.2 4.2 0 0 0 6 6.9a4.5 4.5 0 0 0-1.2 3.2c0 4.5 2.8 5.5 5.4 5.8a3 3 0 0 0-.8 2.3v3.4"/></svg>
+            GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/akash-panwar-27b0141bb/" target="_blank" rel="noopener">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-11h4v1.5A4 4 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn</a></li>
+          <li><a href="https://x.com/akashpnwr" target="_blank" rel="noopener">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3l16 18M20 3 4 21"/></svg>
+            X</a></li>
+          <li><a href="https://akashpanwar.dev/" target="_blank" rel="noopener">
+            <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>
+            akashpanwar.dev</a></li>
         </ul>
       </div>
     </section>

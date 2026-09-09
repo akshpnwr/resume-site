@@ -201,8 +201,24 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--grey-800);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 .topbar__name:hover { text-decoration: none; color: var(--grey-800); }
+
+/* Small avatar beside the name. Circular with a solid border so it reads as a
+   deliberate part of the wireframe system rather than a stray photo; the
+   photo is decorative (alt="") because the name sits right next to it. */
+.avatar {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--grey-700);
+  background: var(--grey-100);
+}
 
 .topnav {
   display: flex;
@@ -941,3 +957,52 @@ main { counter-reset: section-counter; }
   .shell, .hero, .foot { width: 100%; }
   a { color: #000; }
 }
+
+/* ---------------- Icons ---------------- */
+
+/* All icons are stroked, never filled, so they read as part of the same
+   hand-drawn wireframe system as the arrows and dashed borders. They inherit
+   colour from the text beside them and are always decorative — every one is
+   aria-hidden with a real text label next to it. */
+.icon {
+  flex: none;
+  vertical-align: middle;
+  stroke: currentColor;
+}
+
+/* Section headers: the icon sits between the counter bubble and the title,
+   quieter than the heading text so the number → icon → words order reads
+   left to right without competing. */
+.icon--section { color: var(--grey-400); }
+
+.section__title .title__text,
+.contact__title .title__text { display: inline; }
+
+.contact__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Skill-row labels are a small-caps grid column; the icon aligns to the
+   label baseline rather than the tag list beside it. */
+.skill-row__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.icon--skill { color: var(--grey-400); }
+
+/* External-link glyph on live project titles — sits after the link text and
+   lifts slightly, the way a marker tick would. */
+.icon--ext {
+  color: var(--grey-400);
+  margin-left: var(--space-1);
+  transform: translateY(-1px);
+}
+.card__title a:hover .icon--ext { color: var(--annotation-blue); }
+
+/* Contact link list: icon + label share the dashed underline, so the icon
+   picks up the same hover colour shift as the text. */
+.links .icon { color: inherit; }
