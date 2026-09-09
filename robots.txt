@@ -1,0 +1,7 @@
+# resume.akashpanwar.dev — the resume site.
+# Distinct content and a distinct audience from the portfolio at
+# akashpanwar.dev, so this host is indexable in its own right.
+User-agent: *
+Allow: /
+
+Sitemap: https://resume.akashpanwar.dev/sitemap.xml
