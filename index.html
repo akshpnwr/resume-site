@@ -677,6 +677,36 @@
         <span>Open to full-time roles</span>
       </div>
     </footer>
+    <!-- Scrollbar cat: rides the right edge as the scrollbar thumb, its
+         position tracking how far down the page you are. -->
+    <div class="cat" id="cat" hidden>
+      <div class="cat__track" aria-hidden="true"></div>
+      <button class="cat__btn" id="cat-thumb" type="button"
+              aria-label="Scroll position — drag to scroll, or press to jump to top">
+        <svg class="cat__svg" viewBox="0 0 64 48" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <!-- tail -->
+          <path class="cat__tail" d="M13 34 C4 33 3 22 10 20" />
+          <!-- body -->
+          <path d="M13 35 C11 24 18 17 28 17 L42 17 C51 17 56 23 56 30 C56 36 51 39 45 39 L20 39 C16 39 14 37 13 35 Z" />
+          <!-- legs -->
+          <path class="cat__legs" d="M24 39 L24 43 M33 39 L33 43 M44 39 L44 43" />
+          <!-- head -->
+          <path d="M42 17 C42 10 47 6 52 6 C57 6 61 10 61 16 C61 21 57 24 52 24 C46 24 42 21 42 17 Z" />
+          <!-- ears -->
+          <path d="M45 10 L44 3 L50 7 M59 9 L61 3 L55 6" />
+          <!-- eyes -->
+          <path class="cat__eye" d="M49 14 L49 15.5 M56 14 L56 15.5" stroke-width="2.6" />
+          <!-- muzzle -->
+          <path d="M52.5 18 L52.5 19.5 M52.5 19.5 C51.5 21 50 20.5 49.6 19.6 M52.5 19.5 C53.5 21 55 20.5 55.4 19.6" stroke-width="1.4" />
+          <!-- whiskers -->
+          <path d="M48 19 L43 18 M48 20.5 L43.5 21 M57 19 L62 18 M57 20.5 L61.5 21" stroke-width="1.2" />
+        </svg>
+        <span class="cat__zzz" aria-hidden="true">z</span>
+      </button>
+    </div>
+
     <script>
       (function () {
         var root = document.documentElement;
@@ -712,6 +742,165 @@
         });
 
         sync();
+      })();
+    </script>
+    <script>
+      // Scrollbar cat. The cat is the scrollbar thumb: it rides the right edge
+      // at whatever fraction of the page you have scrolled, climbs or descends
+      // to face the direction of travel, and can be dragged to scroll. Falls
+      // back to the native scrollbar for reduced-motion and narrow screens.
+      (function () {
+        var el = document.getElementById("cat");
+        if (!el) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (window.matchMedia("(max-width: 640px)").matches) return;
+
+        var thumb = document.getElementById("cat-thumb");
+        var doc = document.documentElement;
+
+        var PAD = 12;            // gap above and below the travel range, px
+        var SPRITE = 64;         // sprite length along the track, px
+        // Rotating the 64x48 sprite by -90deg leaves its box offset by half
+        // the difference between its sides; correcting for that keeps the
+        // visible top and bottom gaps equal to PAD.
+        var SKEW = (64 - 48) / 2;
+        var SETTLE = 420;        // how long after a scroll the cat stops moving, ms
+        var SLEEP_AFTER = 9000;  // stillness before a nap, ms
+
+        var state = "";
+        var facing = 0;          // 0 = climbing up, 1 = heading down
+        var progress = 0;        // 0..1 scroll position
+        var lastMoved = 0;
+        var dragging = false;
+        var dragMoved = false;   // true once a drag actually scrolled
+        var grabOffset = 0;      // where within the cat the pointer took hold
+
+        function scrollable() {
+          return Math.max(0, doc.scrollHeight - window.innerHeight);
+        }
+
+        // The distance the cat's centre may travel down the viewport.
+        function travel() {
+          return Math.max(0, window.innerHeight - SPRITE - PAD * 2);
+        }
+
+        function setState(next) {
+          if (state === next) return;
+          state = next;
+          el.setAttribute("data-state", next);
+        }
+
+        function render() {
+          el.style.setProperty("--y", (PAD + SKEW + progress * travel()).toFixed(1) + "px");
+          el.style.setProperty("--turn", facing);
+          el.setAttribute("data-turn", facing);
+          thumb.setAttribute("aria-valuenow", Math.round(progress * 100));
+        }
+
+        function readScroll() {
+          var max = scrollable();
+          var next = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+          if (next !== progress) {
+            facing = next < progress ? 0 : 1;
+            progress = next;
+            lastMoved = performance.now();
+            setState("run");
+          }
+          render();
+          // A page too short to scroll has no thumb to show.
+          el.toggleAttribute("data-inert", max <= 0);
+        }
+
+        // Idle/sleep is driven by a light rAF loop rather than timers so the
+        // transition out of "run" lines up with the last scroll frame.
+        function tick(now) {
+          if (!dragging && state === "run" && now - lastMoved > SETTLE) setState("idle");
+          if (state === "idle" && now - lastMoved > SLEEP_AFTER) setState("sleep");
+          requestAnimationFrame(tick);
+        }
+
+        window.addEventListener("scroll", readScroll, { passive: true });
+        window.addEventListener("resize", readScroll, { passive: true });
+
+        // Dragging the cat scrolls the page, like a real scrollbar thumb.
+        // The point you grabbed stays under the cursor, so the cat does not
+        // jump when the drag starts.
+        function scrollToPointer(clientY) {
+          var frac = (clientY - grabOffset - PAD) / (travel() || 1);
+          window.scrollTo({
+            top: Math.min(1, Math.max(0, frac)) * scrollable(),
+            behavior: "auto"
+          });
+        }
+
+        thumb.addEventListener("pointerdown", function (e) {
+          dragging = true;
+          dragMoved = false;
+          // The stylesheet sets scroll-behavior: smooth on <html>, which would
+          // make the page ease toward each drag position instead of tracking
+          // the pointer. Suspend it for the length of the drag.
+          doc.style.scrollBehavior = "auto";
+          // Distance from the cat's current top to where the pointer landed.
+          grabOffset = e.clientY - (PAD + progress * travel());
+          el.setAttribute("data-dragging", "");
+          thumb.setPointerCapture(e.pointerId);
+          e.preventDefault();
+        });
+
+        thumb.addEventListener("pointermove", function (e) {
+          if (!dragging) return;
+          dragMoved = true;
+          scrollToPointer(e.clientY);
+        });
+
+        function endDrag(e) {
+          if (!dragging) return;
+          dragging = false;
+          doc.style.scrollBehavior = "";
+          el.removeAttribute("data-dragging");
+          try { thumb.releasePointerCapture(e.pointerId); } catch (err) {}
+          lastMoved = performance.now();
+        }
+        thumb.addEventListener("pointerup", endDrag);
+        thumb.addEventListener("pointercancel", endDrag);
+
+        // Keyboard: the thumb is a real control, so give it real keys.
+        thumb.addEventListener("keydown", function (e) {
+          var page = window.innerHeight * 0.9;
+          var step = { ArrowUp: -80, ArrowDown: 80, PageUp: -page, PageDown: page }[e.key];
+          if (step !== undefined) {
+            window.scrollBy({ top: step, behavior: "smooth" });
+          } else if (e.key === "Home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else if (e.key === "End") {
+            window.scrollTo({ top: scrollable(), behavior: "smooth" });
+          } else {
+            return;
+          }
+          e.preventDefault();
+        });
+
+        // A plain click (no drag) hops back to the top. A drag ends in a
+        // click event too, so ignore that one.
+        thumb.addEventListener("click", function () {
+          if (dragMoved) { dragMoved = false; return; }
+          if (window.scrollY > 4) window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        thumb.setAttribute("role", "slider");
+        thumb.setAttribute("aria-valuemin", "0");
+        thumb.setAttribute("aria-valuemax", "100");
+        thumb.setAttribute("aria-orientation", "vertical");
+
+        // Only now, with the cat definitely running, retire the native
+        // scrollbar it stands in for.
+        doc.classList.add("has-cat");
+
+        el.hidden = false;
+        readScroll();
+        setState("idle");
+        lastMoved = performance.now();
+        requestAnimationFrame(tick);
       })();
     </script>
   </body>

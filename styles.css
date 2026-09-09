@@ -1089,3 +1089,178 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 /* Contact link list: icon + label share the dashed underline, so the icon
    picks up the same hover colour shift as the text. */
 .links .icon { color: inherit; }
+
+/* ============================================================
+   Scrollbar cat
+   The cat *is* the scrollbar thumb, replacing the native one. It
+   rides a dashed track on the right edge at the current scroll
+   fraction, rotated to walk the page with its legs braced against
+   the edge, and turned to face the direction of travel. JS supplies
+   --y (offset down the track) and --turn (0 up, 1 down).
+   ============================================================ */
+
+.cat {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 56px;
+  /* Above the sticky topbar (50) so the thumb stays grabbable the whole
+     way up the page, but below the skip link (100). */
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* Nothing to scroll: no thumb. */
+.cat[data-inert] { opacity: 0; visibility: hidden; }
+
+/* The rail the cat walks along. */
+.cat__track {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  /* Centre of the 56px lane, so the cat walks straight down the line. */
+  right: 27px;
+  width: 0;
+  border-left: 1px dashed var(--grey-300);
+}
+
+.cat__btn {
+  position: absolute;
+  top: 0;
+  /* Rotating the 64x48 sprite shifts its box by (64-48)/2 = 8px, so the
+     inset is offset to land the cat's spine on the rail at right:27px. */
+  right: -4px;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--grey-500);
+  cursor: grab;
+  pointer-events: auto;
+  line-height: 0;
+  /* The lane is fixed: rotate -90deg so the cat stands vertically with its
+     legs against the right-hand edge and its belly toward the page. That is
+     the climbing pose, and it never changes. */
+  transform: translateY(var(--y, 0px)) rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: color .2s ease;
+  will-change: transform;
+}
+
+.cat[data-dragging] .cat__btn { cursor: grabbing; }
+
+.cat__btn:hover,
+.cat__btn:focus-visible { color: var(--annotation-blue); }
+
+.cat__btn:focus-visible {
+  outline: 2px dashed var(--annotation-blue);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* The sketch lines need a touch more weight against the dark canvas. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .cat__btn { color: var(--grey-600); }
+  :root:not([data-theme="light"]) .cat__track { border-left-color: var(--grey-300); }
+}
+:root[data-theme="dark"] .cat__btn { color: var(--grey-600); }
+
+.cat__svg {
+  width: 64px;
+  height: 48px;
+  overflow: visible;
+}
+
+/* Heading down: mirror the cat end-for-end within its own (already rotated)
+   box. Because the box is vertical, this flips the head to the leading edge
+   while the belly and legs stay exactly where they are. It rides in a
+   variable because the gait and sleep rules below also drive this
+   transform, and each must compose with the mirror rather than clear it. */
+.cat__svg { transform: scaleX(var(--flip, 1)); }
+.cat[data-turn="1"] { --flip: -1; }
+
+/* Scrambling — a quick bob while the page is actually moving. */
+.cat[data-state="run"] .cat__svg { animation: cat-bob .18s steps(2, end) infinite; }
+
+@keyframes cat-bob {
+  from { transform: translateY(0)     scaleX(var(--flip, 1)); }
+  to   { transform: translateY(-2px)  scaleX(var(--flip, 1)); }
+}
+
+/* Legs scrabble only while climbing. */
+.cat[data-state="run"] .cat__legs { animation: cat-legs .18s steps(2, end) infinite; }
+
+@keyframes cat-legs {
+  from { transform: translateX(0); }
+  to   { transform: translateX(2px); }
+}
+
+/* Tail: lazy when parked, whipping while climbing. */
+.cat__tail {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+}
+.cat[data-state="idle"]  .cat__tail { animation: cat-tail 2.4s ease-in-out infinite; }
+.cat[data-state="run"]   .cat__tail { animation: cat-tail .5s  ease-in-out infinite; }
+.cat[data-state="sleep"] .cat__tail { animation: cat-tail 3.6s ease-in-out infinite; }
+
+@keyframes cat-tail {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(-18deg); }
+}
+
+/* Blink while resting; eyes shut once asleep. */
+.cat[data-state="idle"]  .cat__eye { animation: cat-blink 4.5s ease-in-out infinite; }
+.cat[data-state="sleep"] .cat__eye { opacity: .3; }
+
+@keyframes cat-blink {
+  0%, 92%, 100% { opacity: 1; }
+  95%           { opacity: .15; }
+}
+
+/* Sleep: settle onto the rail and float a "z". The "z" sits in the
+   rotated frame, so it is counter-rotated to stay upright. */
+.cat[data-state="sleep"] .cat__svg {
+  transform: translateY(3px) scaleY(.92) scaleX(var(--flip, 1));
+}
+
+.cat__zzz {
+  position: absolute;
+  top: 2px;
+  left: -2px;
+  font-family: var(--font-annotation);
+  font-size: .875rem;
+  line-height: 1;
+  color: var(--grey-400);
+  opacity: 0;
+  transform: rotate(calc(90deg - var(--turn, 0) * 180deg));
+}
+.cat[data-state="sleep"] .cat__zzz { animation: cat-zzz 2.6s ease-out infinite; }
+
+@keyframes cat-zzz {
+  0%   { opacity: 0; transform: rotate(calc(90deg - var(--turn, 0) * 180deg)) translate(0, 0) scale(.7); }
+  25%  { opacity: .9; }
+  100% { opacity: 0; transform: rotate(calc(90deg - var(--turn, 0) * 180deg)) translate(10px, -20px) scale(1.15); }
+}
+
+/* Decoration only: the native scrollbar stays for anyone who does not
+   get the cat. */
+@media (max-width: 640px) {
+  .cat { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat { display: none; }
+}
+
+/* The cat replaces the native scrollbar, so hide that — but only where the
+   cat actually renders. Narrow screens and reduced-motion visitors keep the
+   real scrollbar, since for them there is no cat to scroll with. */
+@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
+  html.has-cat {
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* legacy Edge */
+  }
+  html.has-cat::-webkit-scrollbar { width: 0; height: 0; }
+}
