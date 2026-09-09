@@ -672,9 +672,27 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: border-color .18s ease;
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
 }
-.card:hover { border-color: var(--grey-700); }
+
+/* Inspecting a card lifts it out of the wireframe: the dashed review border
+   resolves to a solid edge and the card casts a shadow onto the canvas, so
+   the screenshot regaining its colour reads as one gesture rather than a
+   stray filter change. */
+.card:hover,
+.card:focus-within {
+  border-color: var(--grey-700);
+  border-style: solid;
+  transform: translateY(-4px);
+  box-shadow: 4px 8px 20px var(--sticky-shadow);
+}
+
+/* The lift is decorative; visitors who ask for less motion keep the border
+   and colour cues without the card moving under the pointer. */
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:focus-within { transform: none; }
+}
 
 .card__shot {
   display: block;
@@ -876,6 +894,34 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   color: var(--grey-500);
   max-width: 50ch;
   margin: 0 0 var(--space-6);
+}
+
+/* The pacing cat, sat in the space the 50ch blurb leaves free. It is purely
+   decorative, so it never takes layout away from the CTAs: on narrow screens
+   it drops out entirely rather than pushing the email button below the fold. */
+.contact__cat {
+  display: none;
+}
+
+@media (min-width: 861px) {
+  .contact { overflow: hidden; }
+
+  .contact__cat {
+    display: block;
+    position: absolute;
+    right: var(--space-6);
+    bottom: 0;
+    width: min(260px, 30%);
+    height: auto;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+}
+
+/* The SVG animates itself via SMIL, which CSS cannot pause — so for reduced
+   motion the cat is removed rather than stilled. */
+@media (prefers-reduced-motion: reduce) {
+  .contact__cat { display: none; }
 }
 
 .links {
